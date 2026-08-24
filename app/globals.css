@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: "Unbounded", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  --font-body: "Inter", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: #080808;
+  scroll-behavior: auto;
+}
+
+body {
+  background: #080808;
+  color: #F5F1EA;
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: #FF4D00;
+  color: #080808;
+}
+
+/* thin cyber scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0f0f0f;
+}
+::-webkit-scrollbar-thumb {
+  background: #FF4D00;
+  border-radius: 0;
+}
+
+.grain-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background-image: url('/assets/noise.png');
+  background-size: 256px 256px;
+  mix-blend-mode: overlay;
+  opacity: 0.5;
+}
+
+.hud-line {
+  border-color: #262626;
+}
+
+.tag {
+  font-family: var(--font-mono);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-size: 0.68rem;
+}
+
+.text-outline {
+  -webkit-text-stroke: 1px #F5F1EA;
+  color: transparent;
+}
+
+@keyframes scanline {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+.scanline {
+  animation: scanline 6s linear infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+.pulse-glow {
+  animation: pulseGlow 2.4s ease-in-out infinite;
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.spin-slow {
+  animation: spin-slow 40s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---- KATMAN KATMAN bölümü: atmosfer efektleri ---- */
+
+/* köz kıvılcımları: aşağıdan yukarı süzülür, yatay sapma --drift ile verilir */
+@keyframes emberRise {
+  0%   { transform: translate3d(0, 0, 0) scale(0.5); opacity: 0; }
+  8%   { opacity: var(--peak, 0.9); }
+  70%  { opacity: var(--peak, 0.9); }
+  100% { transform: translate3d(var(--drift, 0px), calc(-1 * var(--rise, 70vh)), 0) scale(1); opacity: 0; }
+}
+.ember {
+  animation-name: emberRise;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+/* çok yavaş sürüklenen duman perdesi */
+@keyframes smokeDrift {
+  0%   { transform: translate3d(-4%, 3%, 0) scale(1.05); opacity: 0.10; }
+  50%  { transform: translate3d(5%, -2%, 0) scale(1.2);  opacity: 0.22; }
+  100% { transform: translate3d(-4%, 3%, 0) scale(1.05); opacity: 0.10; }
+}
+.smoke-drift {
+  animation: smokeDrift 26s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* hareket azaltma tercihinde partikülleri tamamen gizle:
+   yukarıdaki global kural süreyi 0'a çekince kıvılcımlar donuk nokta olarak kalıyordu */
+@media (prefers-reduced-motion: reduce) {
+  .ember, .smoke-drift { display: none; }
+}
