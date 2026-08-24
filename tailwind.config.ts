@@ -8,17 +8,20 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        void: "#080808",
-        char: "#0f0f0f",
-        panel: "#141414",
-        line: "#262626",
+        void: "#070604",
+        char: "#11100C",
+        panel: "#191610",
+        line: "#34291F",
         flame: {
-          DEFAULT: "#FF4D00",
-          soft: "#FF7A00",
+          DEFAULT: "#FF3D12",
+          soft: "#FF7A1A",
         },
-        amber: "#FFB347",
-        bone: "#F5F1EA",
-        smoke: "#8a8a86",
+        amber: "#FFC247",
+        bone: "#FFF6E8",
+        smoke: "#B4A99A",
+        herb: "#7BD66F",
+        sumac: "#E5548A",
+        steel: "#62D5FF",
       },
       fontFamily: {
         display: ["var(--font-display)"],
@@ -31,6 +34,7 @@ const config: Config = {
       },
       boxShadow: {
         "flame-glow": "0 0 60px -10px rgba(255,77,0,0.45)",
+        "ember-card": "0 18px 70px -42px rgba(255,61,18,0.9)",
       },
       letterSpacing: {
         widest2: "0.35em",

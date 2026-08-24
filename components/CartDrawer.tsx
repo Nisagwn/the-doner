@@ -74,7 +74,7 @@ export default function CartDrawer() {
         role="dialog"
         aria-modal="true"
         aria-label="Sepetin"
-        className={`fixed top-0 right-0 z-[71] h-[100dvh] w-full max-w-[420px] bg-char border-l border-line flex flex-col transition-transform duration-400 ease-out ${
+        className={`fixed top-0 right-0 z-[71] h-[100dvh] w-full max-w-[420px] ember-surface border-l border-line flex flex-col transition-transform duration-400 ease-out shadow-[-28px_0_80px_rgba(0,0,0,0.45)] ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -89,7 +89,7 @@ export default function CartDrawer() {
             ref={closeRef}
             onClick={closeCart}
             aria-label="Sepeti kapat"
-            className="w-10 h-10 border border-line text-smoke hover:text-flame hover:border-flame transition-colors"
+            className="focus-ring w-10 h-10 border border-line text-smoke hover:text-amber hover:border-amber transition-colors"
           >
             ✕
           </button>
@@ -105,7 +105,7 @@ export default function CartDrawer() {
                   <a
                     href="#builder"
                     onClick={closeCart}
-                    className="tag border border-flame text-flame px-4 py-2 hover:bg-flame hover:text-void transition-colors"
+                    className="focus-ring tag border border-amber text-amber px-4 py-2 hover:bg-amber hover:text-void transition-colors"
                   >
                     Dönerini hazırla
                   </a>
@@ -113,7 +113,7 @@ export default function CartDrawer() {
               ) : (
                 <ul className="space-y-4">
                   {items.map((l) => (
-                    <li key={l.id} className="border border-line p-4">
+                    <li key={l.id} className="border border-line bg-void/35 p-4">
                       <div className="flex justify-between gap-3 mb-1">
                         <p className="font-display font-semibold text-bone text-sm">{l.label}</p>
                         <p className="font-mono text-sm text-bone shrink-0 tabular-nums">{l.price * l.qty}₺</p>
@@ -124,7 +124,7 @@ export default function CartDrawer() {
                           <button
                             onClick={() => setQty(l.id, l.qty - 1)}
                             aria-label={`${l.label} adetini azalt`}
-                            className="w-8 h-8 text-bone hover:text-flame transition-colors"
+                            className="focus-ring w-8 h-8 text-bone hover:text-flame transition-colors"
                           >
                             −
                           </button>
@@ -132,14 +132,14 @@ export default function CartDrawer() {
                           <button
                             onClick={() => setQty(l.id, l.qty + 1)}
                             aria-label={`${l.label} adetini artır`}
-                            className="w-8 h-8 text-bone hover:text-flame transition-colors"
+                            className="focus-ring w-8 h-8 text-bone hover:text-flame transition-colors"
                           >
                             +
                           </button>
                         </div>
                         <button
                           onClick={() => remove(l.id)}
-                          className="tag text-smoke hover:text-flame transition-colors"
+                          className="focus-ring tag text-smoke hover:text-flame transition-colors"
                         >
                           Çıkar
                         </button>
@@ -167,11 +167,11 @@ export default function CartDrawer() {
                 )}
                 <div className="flex justify-between items-center border-t border-line pt-3 mb-4">
                   <span className="tag text-smoke">Toplam</span>
-                  <span className="font-display font-extrabold text-2xl text-flame tabular-nums">{grand}₺</span>
+                  <span className="font-display font-extrabold text-2xl text-amber tabular-nums">{grand}₺</span>
                 </div>
                 <button
                   onClick={() => setStage("form")}
-                  className="w-full bg-flame text-void font-display font-extrabold py-3 hover:bg-amber transition-colors"
+                  className="focus-ring w-full bg-flame-gradient text-void font-display font-extrabold py-3 hover:brightness-110 transition-[filter,transform] active:translate-y-px"
                 >
                   ADRES BİLGİLERİ
                 </button>
@@ -200,7 +200,7 @@ export default function CartDrawer() {
                     value={form[f.k]}
                     onChange={(e) => setForm((s) => ({ ...s, [f.k]: e.target.value }))}
                     placeholder={f.ph}
-                    className={`w-full bg-void border px-3 py-2.5 text-sm text-bone placeholder:text-smoke/50 outline-none transition-colors focus:border-flame ${
+                    className={`w-full bg-void border px-3 py-2.5 text-sm text-bone placeholder:text-smoke/50 outline-none transition-colors focus:border-amber ${
                       errors[f.k] ? "border-flame" : "border-line"
                     }`}
                   />
@@ -218,7 +218,7 @@ export default function CartDrawer() {
                   value={form.address}
                   onChange={(e) => setForm((s) => ({ ...s, address: e.target.value }))}
                   placeholder="Mahalle, sokak, bina, daire"
-                  className={`w-full bg-void border px-3 py-2.5 text-sm text-bone placeholder:text-smoke/50 outline-none resize-none transition-colors focus:border-flame ${
+                  className={`w-full bg-void border px-3 py-2.5 text-sm text-bone placeholder:text-smoke/50 outline-none resize-none transition-colors focus:border-amber ${
                     errors.address ? "border-flame" : "border-line"
                   }`}
                 />
@@ -234,7 +234,7 @@ export default function CartDrawer() {
                   value={form.note}
                   onChange={(e) => setForm((s) => ({ ...s, note: e.target.value }))}
                   placeholder="Soğansız olsun, zili çalmayın…"
-                  className="w-full bg-void border border-line px-3 py-2.5 text-sm text-bone placeholder:text-smoke/50 outline-none focus:border-flame transition-colors"
+                  className="w-full bg-void border border-line px-3 py-2.5 text-sm text-bone placeholder:text-smoke/50 outline-none focus:border-amber transition-colors"
                 />
               </div>
             </div>
@@ -242,18 +242,18 @@ export default function CartDrawer() {
             <div className="border-t border-line px-6 py-5 shrink-0">
               <div className="flex justify-between items-center mb-4">
                 <span className="tag text-smoke">Ödenecek</span>
-                <span className="font-display font-extrabold text-2xl text-flame tabular-nums">{grand}₺</span>
+                <span className="font-display font-extrabold text-2xl text-amber tabular-nums">{grand}₺</span>
               </div>
               <div className="flex gap-3">
                 <button
                   onClick={() => setStage("cart")}
-                  className="tag border border-line text-smoke px-4 hover:border-smoke transition-colors"
+                  className="focus-ring tag border border-line text-smoke px-4 hover:border-smoke transition-colors"
                 >
                   Geri
                 </button>
                 <button
                   onClick={submit}
-                  className="flex-1 bg-flame text-void font-display font-extrabold py-3 hover:bg-amber transition-colors"
+                  className="focus-ring flex-1 bg-flame-gradient text-void font-display font-extrabold py-3 hover:brightness-110 transition-[filter,transform] active:translate-y-px"
                 >
                   SİPARİŞİ VER
                 </button>
@@ -268,15 +268,15 @@ export default function CartDrawer() {
         {/* ---- ONAY ---- */}
         {stage === "done" && (
           <div className="flex-1 flex flex-col items-center justify-center text-center px-8 gap-4">
-            <div className="w-16 h-16 border border-flame text-flame flex items-center justify-center text-2xl">✓</div>
+            <div className="w-16 h-16 border border-herb text-herb flex items-center justify-center text-2xl shadow-[0_0_36px_rgba(123,214,111,0.35)]">✓</div>
             <p className="font-display font-extrabold text-2xl text-bone">Siparişin bize ulaştı</p>
-            <p className="tag text-flame">Sipariş no: {orderNo}</p>
+            <p className="tag text-amber">Sipariş no: {orderNo}</p>
             <p className="text-sm text-smoke leading-relaxed">
               Birkaç dakika içinde arayıp teyit edeceğiz. Şiş zaten ateşte, uzun sürmez.
             </p>
             <button
               onClick={startOver}
-              className="tag border border-flame text-flame px-5 py-2.5 mt-2 hover:bg-flame hover:text-void transition-colors"
+              className="focus-ring tag border border-amber text-amber px-5 py-2.5 mt-2 hover:bg-amber hover:text-void transition-colors"
             >
               Kapat
             </button>

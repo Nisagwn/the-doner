@@ -82,7 +82,8 @@ export default function FinalStack() {
   const handlePointerLeave = () => revealTo.current?.(START_REVEAL);
 
   return (
-    <section ref={section} id="stack" className="relative bg-void py-28 md:py-36">
+    <section ref={section} id="stack" className="relative overflow-hidden bg-void py-28 md:py-36">
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_20%_28%,rgba(123,214,111,0.12),transparent_34%),radial-gradient(ellipse_at_80%_20%,rgba(229,84,138,0.12),transparent_32%)]" />
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
@@ -102,8 +103,9 @@ export default function FinalStack() {
           ref={imgWrap}
           onPointerMove={handlePointerMove}
           onPointerLeave={handlePointerLeave}
-          className="relative w-full aspect-[16/9] overflow-hidden bg-void border border-line cursor-ew-resize select-none touch-pan-y"
+          className="relative w-full aspect-[16/9] overflow-hidden bg-void border border-line cursor-ew-resize select-none touch-pan-y shadow-ember-card"
         >
+          <div className="absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,#7BD66F,#FFC247,#E5548A)] z-20 pointer-events-none" />
           {/* Alt katman: tezgâhtaki ham malzemeler */}
           <Image
             src="/assets/ingredients-board.webp"
@@ -130,9 +132,9 @@ export default function FinalStack() {
 
           <div className="absolute inset-0 bg-gradient-to-t from-void/40 via-transparent to-transparent pointer-events-none" />
 
-          <p className="tag text-smoke absolute top-4 left-4 z-10 pointer-events-none">Kurulu Hâli</p>
-          <p className="tag text-smoke absolute top-4 right-4 z-10 pointer-events-none">Ham Malzeme</p>
-          <p className="tag text-smoke/70 absolute bottom-4 left-1/2 -translate-x-1/2 z-10 pointer-events-none">
+          <p className="tag text-herb absolute top-4 left-4 z-10 pointer-events-none">Kurulu Hâli</p>
+          <p className="tag text-sumac absolute top-4 right-4 z-10 pointer-events-none">Ham Malzeme</p>
+          <p className="tag text-amber absolute bottom-4 left-1/2 -translate-x-1/2 z-10 pointer-events-none">
             ← fareyi gezdir →
           </p>
         </div>
@@ -141,7 +143,7 @@ export default function FinalStack() {
           {STATS.map((s) => (
             <div key={s.k} className="stat-item bg-char p-6">
               <p className="tag text-smoke mb-2">{s.k}</p>
-              <p className="font-display font-extrabold text-2xl md:text-3xl text-bone">{s.v}</p>
+              <p className="font-display font-extrabold text-2xl md:text-3xl text-bone tabular-nums">{s.v}</p>
             </div>
           ))}
         </div>

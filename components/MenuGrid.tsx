@@ -14,19 +14,35 @@ export default function MenuGrid() {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
-      gsap.from(".menu-card", {
-        opacity: 0,
-        y: 30,
-        stagger: 0.1,
-        scrollTrigger: { trigger: section.current, start: "top 78%" },
+      const cards = gsap.utils.toArray<HTMLElement>(".menu-card");
+      ScrollTrigger.create({
+        trigger: section.current,
+        start: "top 78%",
+        once: true,
+        onEnter: () => {
+          gsap.fromTo(
+            cards,
+            { opacity: 0, y: 24 },
+            {
+              opacity: 1,
+              y: 0,
+              stagger: 0.08,
+              duration: 0.55,
+              ease: "power3.out",
+              clearProps: "opacity,transform",
+            }
+          );
+        },
       });
     }, section);
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={section} id="menu" className="relative bg-char py-28 md:py-36 border-t border-line">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+    <section ref={section} id="menu" className="relative overflow-hidden bg-char py-28 md:py-36 border-t border-line">
+      <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,#FF3D12,#FFC247,#7BD66F,transparent)]" />
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_16%_10%,rgba(255,61,18,0.16),transparent_36%),radial-gradient(ellipse_at_86%_20%,rgba(98,213,255,0.10),transparent_34%)]" />
+      <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
           <div>
             <p className="tag text-flame mb-3">Sabit Menü</p>
@@ -41,15 +57,15 @@ export default function MenuGrid() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-px bg-line border border-line">
-          {MENU_COMBOS.map((c) => (
+        <div className="grid md:grid-cols-3 gap-3 md:gap-px md:bg-line md:border md:border-line">
+          {MENU_COMBOS.map((c, i) => (
             <button
               key={c.id}
               onClick={() => {
                 add({ id: `combo-${c.id}`, label: c.name, detail: c.desc, price: c.price });
                 openCart();
               }}
-              className="menu-card bg-void flex flex-col text-left hover:bg-panel transition-colors duration-300 group"
+              className="menu-card kinetic-card focus-ring bg-void border border-line md:border-0 flex flex-col text-left hover:bg-panel hover:shadow-ember-card transition-all duration-300 group"
             >
               <div className="relative aspect-[16/10] overflow-hidden bg-panel border-b border-line">
                 <Image
@@ -57,18 +73,18 @@ export default function MenuGrid() {
                   alt={c.alt}
                   fill
                   sizes="(max-width: 768px) 100vw, 33vw"
-                  className="object-cover saturate-[0.85] group-hover:saturate-110 group-hover:scale-[1.04] transition-[transform,filter] duration-500 ease-out"
+                  className="object-cover saturate-[0.95] contrast-[1.05] group-hover:saturate-[1.22] group-hover:scale-[1.04] transition-[transform,filter] duration-500 ease-out"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-void via-void/10 to-transparent" />
-                <p className="tag text-flame absolute bottom-3 left-4">{c.code}</p>
+                <p className={`tag absolute bottom-3 left-4 ${i === 1 ? "text-steel" : i === 2 ? "text-sumac" : "text-amber"}`}>{c.code}</p>
               </div>
 
-              <div className="p-8 flex flex-col flex-1">
+              <div className="accent-rail p-8 flex flex-col flex-1">
                 <h3 className="font-display font-extrabold text-2xl text-bone mb-3">{c.name}</h3>
                 <p className="text-smoke text-sm leading-relaxed mb-8 flex-1">{c.desc}</p>
                 <div className="flex items-center justify-between pt-4 border-t border-line">
                   <span className="font-display font-extrabold text-2xl text-bone">{c.price}₺</span>
-                  <span className="tag text-smoke group-hover:text-flame transition-colors">SEPETE EKLE →</span>
+                  <span className="tag text-smoke group-hover:text-amber transition-colors">SEPETE EKLE →</span>
                 </div>
               </div>
             </button>

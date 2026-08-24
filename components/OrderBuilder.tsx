@@ -20,8 +20,8 @@ function OptionCard({
   return (
     <button
       onClick={onClick}
-      className={`group relative flex items-center gap-4 border p-3 text-left transition-all duration-300 ${
-        selected ? "border-flame bg-flame/[0.06]" : "border-line hover:border-smoke"
+      className={`focus-ring kinetic-card group relative flex items-center gap-4 border p-3 text-left transition-all duration-300 ${
+        selected ? "border-amber ember-surface shadow-ember-card" : "border-line bg-char/50 hover:border-smoke hover:bg-panel"
       }`}
     >
       {option.image ? (
@@ -37,14 +37,15 @@ function OptionCard({
         <p className="font-display font-semibold text-bone truncate">{option.label}</p>
         <p className="text-xs text-smoke truncate">{option.desc}</p>
       </div>
-      <div className="ml-auto tag text-flame shrink-0">
+      <div className={`ml-auto tag shrink-0 ${selected ? "text-amber" : "text-flame"}`}>
         {option.price > 0 ? `+${option.price}₺` : "DAHİL"}
       </div>
       <span
-        className={`absolute -top-px -left-px w-2 h-2 border-t border-l transition-colors ${
-          selected ? "border-flame" : "border-transparent"
+        className={`absolute -top-px -left-px w-3 h-3 border-t-2 border-l-2 transition-colors ${
+          selected ? "border-amber" : "border-transparent"
         }`}
       />
+      {selected && <span className="absolute right-3 top-3 h-2 w-2 bg-herb shadow-[0_0_18px_rgba(123,214,111,0.9)]" />}
     </button>
   );
 }
@@ -143,7 +144,8 @@ export default function OrderBuilder() {
   }, []);
 
   return (
-    <section ref={section} id="builder" className="relative bg-void py-28 md:py-36">
+    <section ref={section} id="builder" className="relative overflow-hidden bg-void py-28 md:py-36">
+      <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(180deg,rgba(255,194,71,0.08),transparent_26%),radial-gradient(ellipse_at_78%_20%,rgba(255,61,18,0.14),transparent_34%)]" />
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         <div className="builder-in flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
           <div>
@@ -200,7 +202,7 @@ export default function OrderBuilder() {
           </div>
 
           {/* summary panel */}
-          <div className="builder-in md:sticky md:top-28 border border-line bg-panel p-6">
+          <div className="builder-in md:sticky md:top-28 border border-line ember-surface p-6 shadow-ember-card">
             <div className="flex items-center justify-between mb-4">
               <p className="tag text-flame">Siparişin</p>
               <button
@@ -209,8 +211,8 @@ export default function OrderBuilder() {
                   setSoundOn((v) => !v);
                 }}
                 aria-pressed={soundOn}
-                className={`tag border px-2 py-1 transition-colors ${
-                  soundOn ? "border-flame text-flame" : "border-line text-smoke hover:border-smoke"
+                className={`focus-ring tag border px-2 py-1 transition-colors ${
+                  soundOn ? "border-amber text-amber bg-amber/10" : "border-line text-smoke hover:border-smoke"
                 }`}
               >
                 {soundOn ? "◼ Ses" : "▶ Ses"}
@@ -218,6 +220,7 @@ export default function OrderBuilder() {
             </div>
 
             <div className="relative aspect-square w-full mb-6 border border-line bg-void/60 overflow-hidden">
+              <div className="absolute inset-x-0 top-0 h-1 bg-[linear-gradient(90deg,#FF3D12,#FFC247,#7BD66F,#62D5FF)] z-10" />
               {/* flash burst on add-to-cart */}
               <div
                 ref={previewFlash}
@@ -289,7 +292,7 @@ export default function OrderBuilder() {
 
             <div className="flex items-center justify-between border-t border-line pt-4 mb-2">
               <span className="tag text-smoke">Toplam</span>
-              <span className="font-display font-extrabold text-2xl text-bone">{breakdown.total}₺</span>
+              <span className="font-display font-extrabold text-3xl text-amber tabular-nums">{breakdown.total}₺</span>
             </div>
 
             <div className="flex items-center justify-between mb-5">
@@ -301,7 +304,7 @@ export default function OrderBuilder() {
               <div className="flex items-center border border-line">
                 <button
                   onClick={() => setQty((q) => Math.max(1, q - 1))}
-                  className="w-10 h-10 text-bone hover:text-flame transition-colors"
+                  className="focus-ring w-10 h-10 text-bone hover:text-flame transition-colors"
                   aria-label="azalt"
                 >
                   −
@@ -309,7 +312,7 @@ export default function OrderBuilder() {
                 <span className="w-10 text-center font-mono text-bone">{qty}</span>
                 <button
                   onClick={() => setQty((q) => q + 1)}
-                  className="w-10 h-10 text-bone hover:text-flame transition-colors"
+                  className="focus-ring w-10 h-10 text-bone hover:text-flame transition-colors"
                   aria-label="artır"
                 >
                   +
@@ -317,7 +320,7 @@ export default function OrderBuilder() {
               </div>
               <button
                 onClick={addToCart}
-                className="flex-1 bg-flame text-void font-display font-extrabold py-3 hover:bg-amber transition-colors"
+                className="focus-ring flex-1 bg-flame-gradient text-void font-display font-extrabold py-3 hover:brightness-110 transition-[filter,transform] active:translate-y-px"
               >
                 SEPETE EKLE
               </button>
@@ -331,7 +334,7 @@ export default function OrderBuilder() {
                 </div>
                 <button
                   onClick={openCart}
-                  className="w-full border border-flame text-flame font-display font-semibold py-3 hover:bg-flame hover:text-void transition-colors"
+                  className="focus-ring w-full border border-amber text-amber font-display font-semibold py-3 hover:bg-amber hover:text-void transition-colors"
                 >
                   SEPETİ GÖR
                 </button>

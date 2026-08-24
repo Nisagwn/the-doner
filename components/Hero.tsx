@@ -23,7 +23,7 @@ function seeded(n: number) {
   return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
 }
 
-const SPARKS = Array.from({ length: 14 }, (_, i) => {
+const SPARKS = Array.from({ length: 10 }, (_, i) => {
   const r = (k: number) => seeded(i * 11 + k);
   return {
     left: 34 + r(1) * 32, // şişin altından yükselsinler
@@ -126,29 +126,30 @@ export default function Hero() {
           fill
           priority
           sizes="100vw"
-          className="object-cover scale-110 blur-[9px] brightness-[0.42] saturate-[0.9]"
+          className="object-cover scale-110 blur-[8px] brightness-[0.48] saturate-[1.18]"
         />
       </div>
 
       {/* merkezden dışa köz parıltısı */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 55% 60% at 50% 52%, rgba(255,110,30,0.28) 0%, transparent 70%)" }}
+        style={{ background: "radial-gradient(ellipse 55% 60% at 50% 52%, rgba(255,85,20,0.36) 0%, rgba(255,194,71,0.12) 34%, transparent 70%)" }}
       />
       {/* yanlara doğru koyulaşan vinyet: odağı ortaya toplar */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: "linear-gradient(90deg, #080808 0%, rgba(8,8,8,0.55) 22%, transparent 45%, transparent 55%, rgba(8,8,8,0.55) 78%, #080808 100%)" }}
+        style={{ background: "linear-gradient(90deg, #070604 0%, rgba(7,6,4,0.58) 22%, transparent 45%, transparent 55%, rgba(7,6,4,0.58) 78%, #070604 100%)" }}
       />
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: "linear-gradient(180deg, rgba(8,8,8,0.85) 0%, transparent 30%, transparent 55%, #080808 100%)" }}
+        style={{ background: "linear-gradient(180deg, rgba(7,6,4,0.88) 0%, transparent 30%, transparent 55%, #070604 100%)" }}
       />
+      <div className="absolute inset-x-0 bottom-0 h-24 pointer-events-none bg-[linear-gradient(90deg,#FF3D12,#FFC247,#7BD66F,#62D5FF)] opacity-25 blur-2xl" />
 
       {/* teknik grid — en yavaş kayan katman */}
       <div
         ref={gridLayer}
-        className="absolute inset-[-4%] opacity-[0.06] pointer-events-none [background-image:linear-gradient(#F5F1EA_1px,transparent_1px),linear-gradient(90deg,#F5F1EA_1px,transparent_1px)] [background-size:44px_44px]"
+        className="absolute inset-[-4%] opacity-[0.07] pointer-events-none [background-image:linear-gradient(#FFF6E8_1px,transparent_1px),linear-gradient(90deg,#FFF6E8_1px,transparent_1px)] [background-size:48px_48px]"
       />
 
       {/* yükselen köz kıvılcımları */}
@@ -208,7 +209,7 @@ export default function Hero() {
 
       {/* etin önünü kesen ikinci kelime */}
       <div ref={titleFront} className="absolute inset-0 z-30 pointer-events-none">
-        <p className="hero-eyebrow absolute inset-x-0 top-[12%] text-center px-6 font-mono text-xs tracking-widest uppercase text-flame">
+        <p className="hero-eyebrow absolute inset-x-0 top-[12%] text-center px-6 font-mono text-xs tracking-widest uppercase text-amber">
           Karaköy&apos;de 2011&apos;den beri
         </p>
         <div className="absolute inset-x-0 top-[54%] text-center px-6">
@@ -239,8 +240,8 @@ export default function Hero() {
         <div className="hidden md:block w-[300px]" aria-hidden />
 
         <div className="hidden md:flex flex-col gap-3.5 text-right items-end">
-          {RIGHT_NOTES.map((t) => (
-            <div key={t} className="hero-note font-mono text-xs tracking-widest uppercase text-smoke/80">
+          {RIGHT_NOTES.map((t, i) => (
+            <div key={t} className={`hero-note font-mono text-xs tracking-widest uppercase ${i === 2 ? "text-amber" : "text-smoke/80"}`}>
               {t}
             </div>
           ))}

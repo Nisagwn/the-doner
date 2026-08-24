@@ -13,20 +13,23 @@
 }
 
 html {
-  background: #080808;
+  background: #070604;
   scroll-behavior: auto;
 }
 
 body {
-  background: #080808;
-  color: #F5F1EA;
+  background:
+    linear-gradient(180deg, rgba(255, 61, 18, 0.08), transparent 420px),
+    #070604;
+  color: #FFF6E8;
   font-family: var(--font-body);
   overflow-x: hidden;
+  text-rendering: optimizeLegibility;
 }
 
 ::selection {
-  background: #FF4D00;
-  color: #080808;
+  background: #FFC247;
+  color: #070604;
 }
 
 /* thin cyber scrollbar */
@@ -34,11 +37,11 @@ body {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0f0f0f;
+  background: #11100C;
 }
 ::-webkit-scrollbar-thumb {
-  background: #FF4D00;
-  border-radius: 0;
+  background: linear-gradient(180deg, #FF3D12, #FFC247);
+  border-radius: 999px;
 }
 
 .grain-overlay {
@@ -49,11 +52,11 @@ body {
   background-image: url('/assets/noise.png');
   background-size: 256px 256px;
   mix-blend-mode: overlay;
-  opacity: 0.5;
+  opacity: 0.34;
 }
 
 .hud-line {
-  border-color: #262626;
+  border-color: #34291F;
 }
 
 .tag {
@@ -64,8 +67,46 @@ body {
 }
 
 .text-outline {
-  -webkit-text-stroke: 1px #F5F1EA;
+  -webkit-text-stroke: 1px #FFF6E8;
   color: transparent;
+}
+
+.focus-ring {
+  outline: 2px solid transparent;
+  outline-offset: 3px;
+}
+
+.focus-ring:focus-visible {
+  outline-color: #FFC247;
+}
+
+.ember-surface {
+  background:
+    linear-gradient(135deg, rgba(255, 61, 18, 0.15), transparent 34%),
+    linear-gradient(180deg, rgba(255, 246, 232, 0.035), transparent),
+    #191610;
+}
+
+.kinetic-card {
+  transform: translateZ(0);
+  will-change: transform, border-color, background-color;
+}
+
+.kinetic-card:hover {
+  transform: translate3d(0, -4px, 0);
+}
+
+.accent-rail {
+  position: relative;
+}
+
+.accent-rail::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: linear-gradient(180deg, #FF3D12, #FFC247, #7BD66F);
+  opacity: 0.9;
 }
 
 @keyframes scanline {
@@ -74,6 +115,7 @@ body {
 }
 .scanline {
   animation: scanline 6s linear infinite;
+  will-change: transform;
 }
 
 @keyframes pulseGlow {
@@ -82,6 +124,7 @@ body {
 }
 .pulse-glow {
   animation: pulseGlow 2.4s ease-in-out infinite;
+  will-change: opacity;
 }
 
 @keyframes spin-slow {
@@ -98,6 +141,10 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
+  }
+
+  .kinetic-card:hover {
+    transform: none;
   }
 }
 

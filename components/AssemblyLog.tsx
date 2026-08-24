@@ -84,7 +84,7 @@ function seeded(n: number) {
   return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
 }
 
-const EMBERS = Array.from({ length: 26 }, (_, i) => {
+const EMBERS = Array.from({ length: 18 }, (_, i) => {
   const r = (k: number) => seeded(i * 7 + k);
   return {
     left: 4 + r(1) * 92,
@@ -271,6 +271,7 @@ export default function AssemblyLog() {
 
   return (
     <section ref={section} id="assembly" className="relative min-h-[100svh] bg-char overflow-hidden">
+      <div className="absolute inset-x-0 top-0 z-[3] h-px bg-[linear-gradient(90deg,transparent,#FF3D12,#FFC247,#7BD66F,transparent)]" />
       {/* katmana tepki veren radyal ışımalar */}
       {STEPS.map((step, i) => (
         <div
@@ -293,7 +294,7 @@ export default function AssemblyLog() {
       {/* süzülen duman perdesi */}
       <div
         className="smoke-drift absolute inset-0 z-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse at 50% 80%, rgba(255,140,60,0.10) 0%, transparent 65%)" }}
+        style={{ background: "radial-gradient(ellipse at 50% 80%, rgba(255,140,60,0.14) 0%, transparent 65%)" }}
       />
 
       {/* köz kıvılcımları */}
@@ -335,7 +336,7 @@ export default function AssemblyLog() {
         ))}
       </div>
 
-      <div className="absolute inset-0 z-[1] opacity-[0.05] pointer-events-none [background-image:linear-gradient(#F5F1EA_1px,transparent_1px),linear-gradient(90deg,#F5F1EA_1px,transparent_1px)] [background-size:44px_44px]" />
+      <div className="absolute inset-0 z-[1] opacity-[0.055] pointer-events-none [background-image:linear-gradient(#FFF6E8_1px,transparent_1px),linear-gradient(90deg,#FFF6E8_1px,transparent_1px)] [background-size:48px_48px]" />
 
       {/* duman / ateş atmosferi, sona doğru açılır */}
       <div ref={smokeBg} className="absolute inset-0 z-[2]">
@@ -370,8 +371,8 @@ export default function AssemblyLog() {
                 setSoundOn((v) => !v);
               }}
               aria-pressed={soundOn}
-              className={`tag border px-3 py-2 transition-colors ${
-                soundOn ? "border-flame text-flame" : "border-line text-smoke hover:border-smoke"
+              className={`focus-ring tag border px-3 py-2 transition-colors ${
+                soundOn ? "border-amber text-amber bg-amber/10" : "border-line text-smoke hover:border-smoke"
               }`}
             >
               {soundOn ? "◼ Ses açık" : "▶ Ses kapalı"}
@@ -400,32 +401,32 @@ export default function AssemblyLog() {
                     ref={(el) => {
                       labelRefs.current[i] = el;
                     }}
-                    className={`absolute top-1/2 -translate-y-1/2 z-20 ${
+                    className={`absolute top-1/2 -translate-y-1/2 z-20 max-md:top-auto max-md:bottom-full max-md:left-1/2 max-md:right-auto max-md:mb-1 max-md:-translate-x-1/2 max-md:translate-y-0 ${
                       step.from === "left" ? "left-full ml-4" : "right-full mr-4"
                     }`}
                   >
                     <button
                       onClick={() => setOpenTip((v) => (v === step.code ? null : step.code))}
                       aria-expanded={openTip === step.code}
-                      className={`tag whitespace-nowrap flex items-center gap-2 group ${
+                      className={`focus-ring tag whitespace-nowrap flex items-center gap-2 group max-md:bg-void/75 max-md:px-2 max-md:py-1 max-md:backdrop-blur-sm ${
                         step.from === "left" ? "" : "flex-row-reverse"
                       }`}
                     >
-                      <span className="w-6 h-px bg-flame transition-all duration-300 group-hover:w-10" />
-                      <span className="text-flame">{step.code}</span>
+                      <span className="w-6 h-px bg-amber transition-all duration-300 group-hover:w-10 max-md:hidden" />
+                      <span className="text-amber">{step.code}</span>
                       <span className="text-smoke group-hover:text-bone transition-colors">{step.name}</span>
-                      <span className="text-smoke/50 group-hover:text-flame transition-colors">
+                      <span className="text-smoke/50 group-hover:text-amber transition-colors">
                         {openTip === step.code ? "−" : "+"}
                       </span>
                     </button>
 
                     {openTip === step.code && (
                       <div
-                        className={`absolute top-full mt-2 w-[240px] border border-flame/40 bg-void/95 backdrop-blur-sm p-3 text-xs leading-relaxed text-smoke shadow-[0_20px_50px_rgba(0,0,0,0.6)] ${
+                        className={`absolute top-full mt-2 w-[240px] max-md:w-[210px] border border-amber/50 bg-void/95 backdrop-blur-sm p-3 text-xs leading-relaxed text-smoke shadow-[0_20px_50px_rgba(0,0,0,0.6)] max-md:left-1/2 max-md:right-auto max-md:-translate-x-1/2 ${
                           step.from === "left" ? "left-0" : "right-0"
                         }`}
                       >
-                        <p className="tag text-flame mb-1.5">{step.code} — Köken</p>
+                        <p className="tag text-amber mb-1.5">{step.code} — Köken</p>
                         {step.origin}
                       </div>
                     )}
@@ -450,7 +451,7 @@ export default function AssemblyLog() {
           </div>
 
           <div ref={finalCaption} className="absolute bottom-[8%] inset-x-0 text-center pointer-events-none">
-            <p className="tag text-flame mb-2">Sekiz katman, tek lokma</p>
+            <p className="tag text-amber mb-2">Sekiz katman, tek lokma</p>
             <p className="font-display font-extrabold text-[8vw] md:text-[2.6vw] text-bone">İŞTE BU.</p>
           </div>
         </div>
