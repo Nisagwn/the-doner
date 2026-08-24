@@ -23,17 +23,17 @@ function seeded(n: number) {
   return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
 }
 
-const SPARKS = Array.from({ length: 10 }, (_, i) => {
+const SPARKS = Array.from({ length: 28 }, (_, i) => {
   const r = (k: number) => seeded(i * 11 + k);
   return {
-    left: 34 + r(1) * 32, // şişin altından yükselsinler
-    bottom: -6 - r(2) * 14,
-    size: 1.6 + r(3) * 2.4,
-    duration: 8 + r(4) * 9,
-    delay: -r(5) * 14,
-    drift: (r(6) - 0.5) * 130,
-    rise: 60 + r(7) * 35,
-    peak: 0.5 + r(8) * 0.45,
+    left: 18 + r(1) * 64,
+    bottom: -8 - r(2) * 16,
+    size: 1.4 + r(3) * 4.2,
+    duration: 5.5 + r(4) * 8,
+    delay: -r(5) * 12,
+    drift: (r(6) - 0.5) * 210,
+    rise: 48 + r(7) * 45,
+    peak: 0.58 + r(8) * 0.42,
   };
 });
 
@@ -126,14 +126,18 @@ export default function Hero() {
           fill
           priority
           sizes="100vw"
-          className="object-cover scale-110 blur-[8px] brightness-[0.48] saturate-[1.18]"
+          className="object-cover scale-110 blur-[6px] brightness-[0.58] saturate-[1.45] contrast-[1.12]"
         />
       </div>
 
+      {/* alttan yükselen hareketli alev perdesi */}
+      <div className="hero-flame-field absolute inset-x-[-10%] bottom-[-12%] h-[58vh] pointer-events-none" aria-hidden />
+      <div className="hero-heat-haze absolute inset-x-0 bottom-0 h-[72vh] pointer-events-none" aria-hidden />
+
       {/* merkezden dışa köz parıltısı */}
       <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 55% 60% at 50% 52%, rgba(255,85,20,0.36) 0%, rgba(255,194,71,0.12) 34%, transparent 70%)" }}
+        className="hero-fire-pulse absolute inset-0 pointer-events-none"
+        style={{ background: "radial-gradient(ellipse 58% 62% at 50% 54%, rgba(255,70,18,0.48) 0%, rgba(255,194,71,0.22) 32%, rgba(255,61,18,0.10) 52%, transparent 76%)" }}
       />
       {/* yanlara doğru koyulaşan vinyet: odağı ortaya toplar */}
       <div
@@ -144,7 +148,7 @@ export default function Hero() {
         className="absolute inset-0 pointer-events-none"
         style={{ background: "linear-gradient(180deg, rgba(7,6,4,0.88) 0%, transparent 30%, transparent 55%, #070604 100%)" }}
       />
-      <div className="absolute inset-x-0 bottom-0 h-24 pointer-events-none bg-[linear-gradient(90deg,#FF3D12,#FFC247,#7BD66F,#62D5FF)] opacity-25 blur-2xl" />
+      <div className="absolute inset-x-0 bottom-0 h-36 pointer-events-none bg-[linear-gradient(90deg,#FF3D12,#FFC247,#FF7A1A,#FF3D12)] opacity-45 blur-2xl" />
 
       {/* teknik grid — en yavaş kayan katman */}
       <div
@@ -166,7 +170,7 @@ export default function Hero() {
                 height: s.size,
                 animationDuration: `${s.duration}s`,
                 animationDelay: `${s.delay}s`,
-                boxShadow: "0 0 7px rgba(255,150,50,0.95)",
+                boxShadow: "0 0 10px rgba(255,194,71,0.95), 0 0 22px rgba(255,61,18,0.55)",
                 "--drift": `${s.drift}px`,
                 "--rise": `${s.rise}vh`,
                 "--peak": s.peak,
